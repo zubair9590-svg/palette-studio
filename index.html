@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Palette Studio · Color palette generator</title>
+  <meta name="description" content="Generate beautiful, accessible color palettes. Lock the colors you love, check WCAG contrast and export to CSS, SCSS or JSON." />
+  <meta name="theme-color" content="#0f1115" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Palette Studio home">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="brand-name">Palette Studio</span>
+    </a>
+
+    <nav class="toolbar" aria-label="Palette actions">
+      <label class="select">
+        <span class="sr-only">Color harmony</span>
+        <select id="mode">
+          <option value="auto">Auto harmony</option>
+          <option value="analogous">Analogous</option>
+          <option value="monochromatic">Monochromatic</option>
+          <option value="complementary">Complementary</option>
+          <option value="triadic">Triadic</option>
+          <option value="split">Split complementary</option>
+        </select>
+      </label>
+      <button class="btn" id="undo-btn" type="button" title="Undo (Z)" disabled>Undo</button>
+      <button class="btn" id="save-btn" type="button" title="Save to library (S)">Save</button>
+      <button class="btn" id="library-btn" type="button">Library <span class="count" id="library-count">0</span></button>
+      <button class="btn" id="export-btn" type="button" title="Export (E)">Export</button>
+      <button class="btn btn-primary" id="generate-btn" type="button">Generate</button>
+    </nav>
+  </header>
+
+  <main class="palette" id="palette" aria-label="Current palette"></main>
+
+  <footer class="shortcuts">
+    <span><kbd>Space</kbd> generate</span>
+    <span><kbd>1</kbd>–<kbd>5</kbd> lock a color</span>
+    <span><kbd>Z</kbd> undo</span>
+    <span><kbd>S</kbd> save</span>
+    <span><kbd>E</kbd> export</span>
+  </footer>
+
+  <dialog class="dialog" id="export-dialog" aria-labelledby="export-title">
+    <form method="dialog" class="dialog-inner">
+      <header class="dialog-head">
+        <h2 id="export-title">Export palette</h2>
+        <button class="icon-btn" value="close" aria-label="Close">&#x2715;</button>
+      </header>
+      <div class="tabs" role="tablist" aria-label="Export format">
+        <button type="button" role="tab" class="tab" data-format="css" aria-selected="true">CSS</button>
+        <button type="button" role="tab" class="tab" data-format="scss" aria-selected="false">SCSS</button>
+        <button type="button" role="tab" class="tab" data-format="json" aria-selected="false">JSON</button>
+        <button type="button" role="tab" class="tab" data-format="link" aria-selected="false">Link</button>
+      </div>
+      <pre class="code"><code id="export-code"></code></pre>
+      <button type="button" class="btn btn-primary btn-block" id="copy-export">Copy to clipboard</button>
+    </form>
+  </dialog>
+
+  <dialog class="dialog" id="library-dialog" aria-labelledby="library-title">
+    <form method="dialog" class="dialog-inner">
+      <header class="dialog-head">
+        <h2 id="library-title">Your library</h2>
+        <button class="icon-btn" value="close" aria-label="Close">&#x2715;</button>
+      </header>
+      <ul class="library" id="library-list"></ul>
+      <p class="empty" id="library-empty">No saved palettes yet. Press <kbd>S</kbd> to save the current one.</p>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
